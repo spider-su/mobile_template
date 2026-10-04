@@ -4,7 +4,7 @@ A small Expo + React Native starting point for focused mobile apps. It contains 
 
 ## Start a new app
 
-1. Create a repository from this repository (or clone it and create a new Git history).
+1. Clone this repository, preserving its Git history, then push it to a new app repository. This keeps future template updates mergeable. If you create a repository with GitHub's "Use this template" flow instead, its unrelated history will need targeted cherry-picks for future updates.
 2. Replace `APP_NAME`, `APP_SLUG`, `IOS_BUNDLE_IDENTIFIER`, and `ANDROID_PACKAGE` in your local environment or build environment. Keep each app's identifiers unique. Do not reuse another app's EAS project or signing credentials.
 3. Replace the sample screens and add only the Expo modules the app needs.
 4. Set up app-owned icons, splash assets, API configuration, privacy text, and release configuration.
@@ -38,9 +38,15 @@ CI checks type safety, lint, and unit tests. Expo Doctor checks the installed Ex
 New apps should keep this repository as the `template` remote. Pull an update branch and inspect the diff before merging:
 
 ```sh
-git remote add template git@github.com:spider-su/mobile_template.git
+# When you first clone this repository for an app:
+git remote rename origin template
+git remote add origin git@github.com:YOUR_ORG/YOUR_APP.git
+git push -u origin main
+
+# To pull a template update later:
 git fetch template
-git switch -c template/update-YYYY-MM template/main
+git switch main
+git switch -c template/update-YYYY-MM
 git diff main...template/main
 git merge --no-ff template/main
 ```
