@@ -20,5 +20,10 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     ...(process.env.ANDROID_PACKAGE ? { package: process.env.ANDROID_PACKAGE } : {})
   },
   plugins: ['expo-system-ui'],
-  extra: { ...config.extra }
+  extra: {
+    ...config.extra,
+    ...(process.env.EAS_PROJECT_ID
+      ? { eas: { ...config.extra?.eas, projectId: process.env.EAS_PROJECT_ID } }
+      : {})
+  }
 });

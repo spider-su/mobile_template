@@ -4,13 +4,9 @@ A small Expo + React Native starting point for focused mobile apps. It contains 
 
 ## Start a new app
 
-1. Clone this repository, preserving its Git history, then push it to a new app repository. This keeps future template updates mergeable. If you create a repository with GitHub's "Use this template" flow instead, its unrelated history will need targeted cherry-picks for future updates.
-2. Replace `APP_NAME`, `APP_SLUG`, `IOS_BUNDLE_IDENTIFIER`, and `ANDROID_PACKAGE` in your local environment or build environment. Keep each app's identifiers unique. Do not reuse another app's EAS project or signing credentials.
-3. Replace the sample screens and add only the Expo modules the app needs.
-4. Set up app-owned icons, splash assets, API configuration, privacy text, and release configuration.
-5. Run the checks below and complete the platform checklist before calling the app device-verified.
+Use the [project setup guide](docs/project-setup.md) to choose clone or fork, preserve an update path, and record external service configuration in the right project files. Set unique app identifiers and create a separate EAS project for each app that uses EAS. Do not reuse another app's signing credentials.
 
-For local configuration, copy `.env.example` to `.env` and adjust it. Never commit secrets.
+Copy `.env.example` to `.env` for local values. Never commit secrets. Only configure external providers the app needs.
 
 ## Included
 
