@@ -29,6 +29,7 @@ jobs:
     env:
       CI: '1'
       EXPO_NO_TELEMETRY: '1'
+      ANDROID_PACKAGE: com.spidersu.mobiletemplate
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -44,7 +45,7 @@ jobs:
           packages: 'platform-tools'
       - run: npm ci
       - name: Generate Android project locally
-        run: npx expo prebuild --platform android --non-interactive --clean
+        run: npx expo prebuild --platform android --clean
       - name: Assemble debug APK locally
         working-directory: android
         run: ./gradlew --no-daemon assembleDebug
