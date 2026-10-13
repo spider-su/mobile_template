@@ -1,21 +1,16 @@
-import { StyleSheet, Text, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { appSafeAreaEdges } from '../platform/safeArea';
+import { AppCard, AppScreen, AppText, FeedbackBanner } from '../ui/primitives';
 
 export function SettingsScreen() {
-  return (
-    <SafeAreaView edges={appSafeAreaEdges} style={styles.safe}>
-      <View style={styles.content}>
-        <Text style={styles.title}>Settings</Text>
-        <Text style={styles.body}>Add app preferences and account controls here.</Text>
-      </View>
-    </SafeAreaView>
-  );
+  return <AppScreen>
+    <AppText title>About the UI Kit</AppText>
+    <AppCard>
+      <AppText>Expo + React Native + TypeScript</AppText>
+      <AppText>Reusable UI components live in src/ui. The Home tab demonstrates buttons, loading, forms, confirmation and feedback.</AppText>
+    </AppCard>
+    <FeedbackBanner message="This is a demonstration app. Form values are not persisted, and no external notifications are sent." />
+    <AppCard>
+      <AppText title>Adopting components</AppText>
+      <AppText>Import individual components from src/ui/primitives. Theme tokens live in src/ui/theme. Form rules live in src/ui/validation and should be replaced with product-specific rules.</AppText>
+    </AppCard>
+  </AppScreen>;
 }
-
-const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: '#F5F7FA' },
-  content: { flex: 1, padding: 24, paddingTop: 32 },
-  title: { color: '#172033', fontSize: 28, fontWeight: '700' },
-  body: { color: '#526178', fontSize: 16, lineHeight: 24, marginTop: 12 }
-});
