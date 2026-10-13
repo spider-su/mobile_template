@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Alert, View } from 'react-native';
+import { Alert } from 'react-native';
 import { AppButton, AppCard, AppScreen, AppText, ConfirmDialog, FeedbackBanner, LoadingSpinner, TextField, ToggleField } from '../ui/primitives';
 import { validateDemoForm, type DemoForm, type FormErrors } from '../ui/validation';
 
