@@ -16,6 +16,16 @@ export function HomeScreen() {
     setForm(previous => ({ ...previous, [key]: value }));
     setErrors(previous => ({ ...previous, [key]: undefined }));
   };
+  const localError = (error?: string) => {
+    const keys: Record<string, 'requiredName' | 'shortName' | 'invalidEmail' | 'positiveAmount' | 'maxAmount'> = {
+      'Name is required': 'requiredName',
+      'Enter at least 2 characters': 'shortName',
+      'Enter a valid email': 'invalidEmail',
+      'Enter a positive number': 'positiveAmount',
+      'Maximum is 1,000,000': 'maxAmount'
+    };
+    return error ? t(keys[error] ?? 'correctFields') : undefined;
+  };
   const submit = () => {
     const next = validateDemoForm(form);
     setErrors(next);
@@ -39,9 +49,9 @@ export function HomeScreen() {
     </AppCard>
     <AppCard>
       <AppText title>{t('form')}</AppText>
-      <TextField label={t('name')} placeholder="Ada" value={form.name} onChangeText={change('name')} error={errors.name} />
-      <TextField label={t('email')} placeholder="ada@example.com" value={form.email} onChangeText={change('email')} error={errors.email} keyboardType="email-address" />
-      <TextField label={t('amount')} placeholder="12.50" value={form.amount} onChangeText={change('amount')} error={errors.amount} keyboardType="numeric" />
+      <TextField label={t('name')} placeholder="Ada" value={form.name} onChangeText={change('name')} error={localError(errors.name)} />
+      <TextField label={t('email')} placeholder="ada@example.com" value={form.email} onChangeText={change('email')} error={localError(errors.email)} keyboardType="email-address" />
+      <TextField label={t('amount')} placeholder="12.50" value={form.amount} onChangeText={change('amount')} error={localError(errors.amount)} keyboardType="numeric" />
       <ToggleField label={t('preference')} value={enabled} onValueChange={setEnabled} />
       <AppButton label={t('validate')} onPress={submit} />
       <AppButton label={t('clear')} variant="secondary" onPress={() => { setForm({ name: '', email: '', amount: '' }); setErrors({}); setMessage(t('cleared')); }} />
