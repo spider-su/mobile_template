@@ -1,10 +1,22 @@
 import { useState } from 'react';
+import { checkBiometrics, expoBiometricAdapter } from '../ui/biometrics';
 import { AppButton, AppCard, AppScreen, AppText, FeedbackBanner } from '../ui/primitives';
 import { useLanguage } from '../ui/LanguageContext';
 
 export function SettingsScreen() {
   const { language, setLanguage, t } = useLanguage();
   const [message, setMessage] = useState('');
+  const [checking, setChecking] = useState(false);
+  const verify = async () => {
+    if (checking) return;
+    setChecking(true);
+    try {
+      const result = await checkBiometrics(expoBiometricAdapter());
+      setMessage(t(result === 'verified' ? 'biometricSuccess' : result === 'unavailable' ? 'biometricUnavailable' : 'biometricFailed'));
+    } catch {
+      setMessage(t('biometricFailed'));
+    } finally { setChecking(false); }
+  };
   return <AppScreen>
     <AppText title>{t('settings')}</AppText>
     <AppCard>
@@ -14,8 +26,8 @@ export function SettingsScreen() {
     </AppCard>
     <AppCard>
       <AppText title>{t('biometrics')}</AppText>
-      <AppText>{t('biometricUnavailable')} This template provides an opt-in adapter; connect a native provider in your app.</AppText>
-      <AppButton label={t('check')} disabled onPress={() => setMessage(t('biometricUnavailable'))} />
+      <AppText>{t('biometrics')}</AppText>
+      <AppButton label={t('check')} busy={checking} onPress={() => { void verify(); }} />
     </AppCard>
     <AppCard>
       <AppText title>{t('about')}</AppText>
