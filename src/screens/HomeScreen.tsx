@@ -60,6 +60,6 @@ export function HomeScreen() {
       <AppText title>{t('notifications')}</AppText>
       <AppText>{t('notificationsInfo')}</AppText>
     </AppCard>
-    <ConfirmDialog visible={confirm} title={t('confirmTitle')} onCancel={() => setConfirm(false)} onConfirm={() => { setConfirm(false); setMessage(t('confirmed')); }} />
+    <ConfirmDialog visible={confirm} title={t('confirmTitle')} cancelLabel={t('cancel')} confirmLabel={t('confirm')} onCancel={() => setConfirm(false)} onConfirm={() => { setConfirm(false); setMessage(t('confirmed')); }} />
   </AppScreen>;
 }
