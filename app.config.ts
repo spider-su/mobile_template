@@ -19,7 +19,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     ...config.android,
     ...(process.env.ANDROID_PACKAGE ? { package: process.env.ANDROID_PACKAGE } : {})
   },
-  plugins: ['expo-system-ui'],
+  plugins: ['expo-system-ui', ['expo-local-authentication', { faceIDPermission: 'Allow this app to verify your identity using Face ID.' }]],
   extra: {
     ...config.extra,
     ...(process.env.EAS_PROJECT_ID
