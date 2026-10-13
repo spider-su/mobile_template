@@ -52,3 +52,9 @@ Use the same review process for each app. Keep product-owned files and configura
 ## Shared-code decision rule
 
 Before adding a shared feature, record its source, behavior contract, tests, Expo/RN version compatibility, and device evidence in [the component ledger](docs/component-ledger.md). Port/adapt/skip per app. Move a module into a versioned package only after multiple apps need the same stable API and its release/update path is clear.
+
+## Reusable resilience and Codex workflows
+
+The starter includes an app-level error boundary, a reusable loading/error/empty UI, and an opt-in typed storage contract. See [resilience and storage](docs/resilience-and-storage.md) for limitations and platform adapters. Storage dependencies remain opt-in.
+
+See [AGENTS.md](AGENTS.md) and [Codex workflows](.codex/SKILLS.md) for reusable agent instructions and quality/emulator test skill templates. Adapt these per application.
