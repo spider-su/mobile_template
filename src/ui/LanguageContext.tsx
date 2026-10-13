@@ -6,18 +6,20 @@ const KEY = 'mobile-template.language.v1';
 type LanguageContextValue = { language: Language; setLanguage: (language: Language) => void; t: (key: TranslationKey) => string };
 const Context = createContext<LanguageContextValue | null>(null);
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, updateLanguage] = useState<Language>('en');
-  const [hydrated, setHydrated] = useState(false);
+  const [language, updateLanguage] = useState<Language>(() => {
+    try { return Intl.DateTimeFormat().resolvedOptions().locale.toLowerCase().startsWith('pl') ? 'pl' : 'en'; }
+    catch { return 'en'; }
+  });
   useEffect(() => {
     let mounted = true;
     void AsyncStorage.getItem(KEY).then(value => {
       if (mounted && (value === 'en' || value === 'pl')) updateLanguage(value);
-    }).catch(() => undefined).finally(() => { if (mounted) setHydrated(true); });
+    }).catch(() => undefined);
     return () => { mounted = false; };
   }, []);
   const setLanguage = (value: Language) => {
     updateLanguage(value);
-    if (hydrated) void AsyncStorage.setItem(KEY, value).catch(() => undefined);
+    void AsyncStorage.setItem(KEY, value).catch(() => undefined);
   };
   return <Context.Provider value={{ language, setLanguage, t: key => translate(language, key) }}>{children}</Context.Provider>;
 }
