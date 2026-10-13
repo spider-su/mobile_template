@@ -1,21 +1,40 @@
-import { StyleSheet, Text, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { appSafeAreaEdges } from '../platform/safeArea';
+import { useState } from 'react';
+import { checkBiometrics, expoBiometricAdapter } from '../ui/biometrics';
+import { AppButton, AppCard, AppScreen, AppText, FeedbackBanner } from '../ui/primitives';
+import { useLanguage } from '../ui/LanguageContext';
 
 export function SettingsScreen() {
-  return (
-    <SafeAreaView edges={appSafeAreaEdges} style={styles.safe}>
-      <View style={styles.content}>
-        <Text style={styles.title}>Settings</Text>
-        <Text style={styles.body}>Add app preferences and account controls here.</Text>
-      </View>
-    </SafeAreaView>
-  );
+  const { language, setLanguage, t } = useLanguage();
+  const [message, setMessage] = useState('');
+  const [checking, setChecking] = useState(false);
+  const verify = async () => {
+    if (checking) return;
+    setChecking(true);
+    try {
+      const result = await checkBiometrics(expoBiometricAdapter());
+      setMessage(t(result === 'verified' ? 'biometricSuccess' : result === 'unavailable' ? 'biometricUnavailable' : 'biometricFailed'));
+    } catch {
+      setMessage(t('biometricFailed'));
+    } finally { setChecking(false); }
+  };
+  return <AppScreen>
+    <AppText title>{t('settings')}</AppText>
+    <AppCard>
+      <AppText title>{t('language')}</AppText>
+      <AppButton label={t('english') + (language === 'en' ? ' ✓' : '')} variant="secondary" onPress={() => setLanguage('en')} />
+      <AppButton label={t('polish') + (language === 'pl' ? ' ✓' : '')} variant="secondary" onPress={() => setLanguage('pl')} />
+    </AppCard>
+    <AppCard>
+      <AppText title>{t('biometrics')}</AppText>
+      <AppText>{t('biometrics')}</AppText>
+      <AppButton label={t('check')} busy={checking} onPress={() => { void verify(); }} />
+    </AppCard>
+    <AppCard>
+      <AppText title>{t('about')}</AppText>
+      <AppText>{t('aboutText')}</AppText>
+      <AppText>Expo · React Native · TypeScript</AppText>
+      <AppText>{t('privacy')}</AppText>
+    </AppCard>
+    {message ? <FeedbackBanner message={message} /> : null}
+  </AppScreen>;
 }
-
-const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: '#F5F7FA' },
-  content: { flex: 1, padding: 24, paddingTop: 32 },
-  title: { color: '#172033', fontSize: 28, fontWeight: '700' },
-  body: { color: '#526178', fontSize: 16, lineHeight: 24, marginTop: 12 }
-});
