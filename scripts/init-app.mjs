@@ -18,9 +18,11 @@ export function initialize(root, identity) {
   const values = { APP_NAME: name, APP_SLUG: slug, ANDROID_PACKAGE: androidPackage, IOS_BUNDLE_IDENTIFIER: iosBundleId };
   let output = example;
   for (const [key, value] of Object.entries(values)) {
-    const line = new RegExp('^' + key + '=.*$', 'm');
-    if (!line.test(output) && !new RegExp('^#\\s*' + key + '=.*
-    output = output.replace(line, key + '=' + value).replace(new RegExp('^#\\s*' + key + '=.*
+    const lines = output.split(String.fromCharCode(10));
+    const index = lines.findIndex(line => line.startsWith(key + '=') || line.startsWith('# ' + key + '='));
+    if (index < 0) throw new Error('Missing configuration key: ' + key);
+    lines[index] = key + '=' + value;
+    output = lines.join(String.fromCharCode(10));
   }
   writeFileSync(envPath, output);
 }
