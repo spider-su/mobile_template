@@ -22,4 +22,4 @@ This repository is a reusable Expo/React Native starter, not a product applicati
 Native changes require real emulator/device evidence before declaring platform compatibility. Never reuse signing keys, package IDs, Expo project IDs or release credentials from a downstream app.
 
 ## Codex skills
-See `.codex/SKILLS.md`. Skills are templates to be adapted by downstream apps, not claims of working release automation.
+See `.codex/SKILLS.md` for Android emulator and iOS Simulator smoke workflows. Skills are templates to be adapted by downstream apps, not claims of working release automation.

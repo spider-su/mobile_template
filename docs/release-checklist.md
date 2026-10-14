@@ -8,6 +8,7 @@
 - [ ] Run `npm ci`, `npm run ci` and `npx expo-doctor`
 
 ## Device acceptance
+- [ ] Run `.codex/skills/ios-simulator-smoke/SKILL.md` on macOS/Xcode; record iOS Simulator evidence separately from real-device testing
 - [ ] Install CI-generated Android APK and launch it offline
 - [ ] Test Android gesture and three-button navigation, keyboard and system insets
 - [ ] Test light/dark mode, large font scaling, screen reader and small screen
