@@ -58,3 +58,4 @@ Before adding a shared feature, record its source, behavior contract, tests, Exp
 The starter includes an app-level error boundary, a reusable loading/error/empty UI, and an opt-in typed storage contract. See [resilience and storage](docs/resilience-and-storage.md) for limitations and platform adapters. Storage dependencies remain opt-in.
 
 See [AGENTS.md](AGENTS.md) and [Codex workflows](.codex/SKILLS.md) for reusable agent instructions and quality/emulator test skill templates. Adapt these per application.
+\n## Quick app identity setup\n\nOn a fresh checkout (before creating .env), run:\n\n\`\`\`sh\nnpm run init:app -- "My App" my-app com.example.myapp com.example.myapp\n\`\`\`\n\nThis validates identifiers, writes a local ignored .env from .env.example without modifying tracked files. It refuses to overwrite an existing .env. Review the generated values, icons, permissions and EAS settings before publishing. See [release checklist](docs/release-checklist.md).\n

@@ -11,7 +11,9 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint App.tsx src",
     "test": "vitest run",
-    "ci": "npm run typecheck && npm run lint && npm test"
+    "ci": "npm run typecheck && npm run lint && npm test && npm run test:setup",
+    "init:app": "node scripts/init-app.mjs",
+    "test:setup": "node --test scripts/init-app.test.mjs"
   },
   "dependencies": {
     "@expo/vector-icons": "^15.0.2",
