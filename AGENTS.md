@@ -12,6 +12,10 @@ This repository is a reusable Expo/React Native starter, not a product applicati
 
 Read only the relevant deeper references for the task; source code and current CI override stale documentation.
 
+## Engineering level
+
+**Hobby/personal app, not an enterprise platform.** Build the simplest solution meeting current requirements. Do not add speculative non-functional requirements, infrastructure or abstractions. Apply [project scope policy](docs/project-level.md) before expanding architecture.
+
 ## Guardrails
 - Keep changes small, generic, and compatible with the versions pinned in package-lock.json.
 - Do not import domain flows, private data, credentials, API contracts, production app IDs, or brand assets from downstream apps.
