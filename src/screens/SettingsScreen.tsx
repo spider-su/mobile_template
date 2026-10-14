@@ -26,7 +26,7 @@ export function SettingsScreen() {
     </AppCard>
     <AppCard>
       <AppText title>{t('biometrics')}</AppText>
-      <AppText>{t('biometrics')}</AppText>
+      <AppText>{t('biometricInfo')}</AppText>
       <AppButton label={t('check')} busy={checking} onPress={() => { void verify(); }} />
     </AppCard>
     <AppCard>

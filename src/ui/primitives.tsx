@@ -37,8 +37,8 @@ export function FeedbackBanner({ message, kind = 'info' }: { message: string; ki
   const p = usePalette();
   return <View accessibilityRole={kind === 'error' ? 'alert' : undefined} style={{ borderLeftWidth: 4, borderColor: kind === 'error' ? p.danger : p.primary, padding: 12, backgroundColor: p.surface }}><Text style={{ color: p.text }}>{message}</Text></View>;
 }
-export function ConfirmDialog({ visible, title, onCancel, onConfirm }: { visible: boolean; title: string; onCancel: () => void; onConfirm: () => void }) {
+export function ConfirmDialog({ visible, title, onCancel, onConfirm, cancelLabel = 'Cancel', confirmLabel = 'Confirm' }: { visible: boolean; title: string; onCancel: () => void; onConfirm: () => void; cancelLabel?: string; confirmLabel?: string }) {
   const p = usePalette();
-  return <Modal transparent visible={visible} animationType="fade" onRequestClose={onCancel}><View style={styles.overlay}><View style={{ backgroundColor: p.surface, borderRadius: 16, padding: 24, gap: 16, width: '90%', maxWidth: 400 }}><AppText title>{title}</AppText><AppButton label="Cancel" variant="secondary" onPress={onCancel} /><AppButton label="Confirm" onPress={onConfirm} /></View></View></Modal>;
+  return <Modal transparent visible={visible} animationType="fade" onRequestClose={onCancel}><View style={styles.overlay}><View style={{ backgroundColor: p.surface, borderRadius: 16, padding: 24, gap: 16, width: '90%', maxWidth: 400 }}><AppText title>{title}</AppText><AppButton label={cancelLabel} variant="secondary" onPress={onCancel} /><AppButton label={confirmLabel} onPress={onConfirm} /></View></View></Modal>;
 }
 const styles = StyleSheet.create({ overlay: { flex: 1, backgroundColor: '#0009', alignItems: 'center', justifyContent: 'center' } });

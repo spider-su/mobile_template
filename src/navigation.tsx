@@ -5,10 +5,12 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { HomeScreen } from './screens/HomeScreen';
 import { SettingsScreen } from './screens/SettingsScreen';
 import { getTabBarMetrics } from './platform/safeArea';
+import { useLanguage } from './ui/LanguageContext';
 
 const Tab = createBottomTabNavigator();
 
 function Tabs() {
+  const { t } = useLanguage();
   const insets = useSafeAreaInsets();
   const tabBar = getTabBarMetrics(insets.bottom);
   return (
@@ -16,8 +18,8 @@ function Tabs() {
       headerShown: false,
       tabBarStyle: { height: tabBar.height, paddingTop: tabBar.paddingTop, paddingBottom: tabBar.paddingBottom }
     }}>
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Settings" component={SettingsScreen} />
+      <Tab.Screen name="Home" component={HomeScreen} options={{ tabBarLabel: t("home") }} />
+      <Tab.Screen name="Settings" component={SettingsScreen} options={{ tabBarLabel: t("settings") }} />
     </Tab.Navigator>
   );
 }
