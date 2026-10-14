@@ -3,6 +3,7 @@ import { NavigationContainer, DarkTheme, DefaultTheme } from '@react-navigation/
 import { useColorScheme } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { HomeScreen } from './screens/HomeScreen';
+import { ExamplesScreen } from './screens/ExamplesScreen';
 import { SettingsScreen } from './screens/SettingsScreen';
 import { getTabBarMetrics } from './platform/safeArea';
 import { useLanguage } from './ui/LanguageContext';
@@ -19,6 +20,7 @@ function Tabs() {
       tabBarStyle: { height: tabBar.height, paddingTop: tabBar.paddingTop, paddingBottom: tabBar.paddingBottom }
     }}>
       <Tab.Screen name="Home" component={HomeScreen} options={{ tabBarLabel: t("home") }} />
+      <Tab.Screen name="Examples" component={ExamplesScreen} options={{ tabBarLabel: "Examples" }} />
       <Tab.Screen name="Settings" component={SettingsScreen} options={{ tabBarLabel: t("settings") }} />
     </Tab.Navigator>
   );
