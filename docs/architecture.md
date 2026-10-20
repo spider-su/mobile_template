@@ -26,7 +26,7 @@ Screens may depend on UI, services and platform helpers. UI primitives must not 
 
 ## Safe areas and errors
 
-The app shell owns the top inset, tab navigator owns bottom inset, and modal content owns its own edges. Avoid double padding. Error boundaries catch render errors, not rejected promises; async storage/network failures require explicit UI states. Do not claim biometric verification is an app lock.
+With visible tabs the app screen owns the top inset and the tab navigator owns the bottom. With hidden tabs, the screen or frame must own the bottom explicitly, exactly once; see [navigation and scroll recipe](navigation-and-scroll.md). Modal content owns its own edges. Avoid double padding. Local-first apps should follow [state consistency guidance](local-state-consistency.md). Error boundaries catch render errors, not rejected promises; async storage/network failures require explicit UI states. Do not claim biometric verification is an app lock.
 
 ## How to navigate unfamiliar code
 
