@@ -20,8 +20,9 @@ Read only the relevant deeper references for the task; source code and current C
 - Keep changes small, generic, and compatible with the versions pinned in package-lock.json.
 - Do not import domain flows, private data, credentials, API contracts, production app IDs, or brand assets from downstream apps.
 - Make storage, auth, AI, notifications and other product features opt-in.
-- Respect safe-area ownership: app shell handles the top edge; tabs own the bottom edge; modals own their own edges.
+- Respect safe-area ownership: with visible tabs, the shell handles the top edge and tabs handle the bottom; with hidden tabs, the frame or screen must explicitly own the bottom (exactly once). Modal windows own their own edges. See [navigation recipe](docs/navigation-and-scroll.md).
 - Do not discard uncommitted changes or rewrite history without explicit authorization.
+- Use the [local-state consistency recipe](docs/local-state-consistency.md) for apps with durable records; avoid duplicating derived state, overwriting confirmed facts, and non-idempotent onboarding.
 - Avoid introducing dependencies without a clear cross-app need.
 - Never claim device testing based only on CI or a successful build.
 

@@ -10,9 +10,14 @@
 ## Device acceptance
 - [ ] Run `.codex/skills/ios-simulator-smoke/SKILL.md` on macOS/Xcode; record iOS Simulator evidence separately from real-device testing
 - [ ] Install CI-generated Android APK and launch it offline
+- [ ] Confirm debug APKs are for install testing; Google Play uploads require a correctly signed release AAB
+- [ ] Keep the Android package name and upload signing identity stable; increment versionCode for every new Play upload
+- [ ] Test the exact Play test-track update over the previous installed version without uninstalling; verify local records survive
 - [ ] Test Android gesture and three-button navigation, keyboard and system insets
 - [ ] Test light/dark mode, large font scaling, screen reader and small screen
 - [ ] Verify EN/PL text and persistence after process restart
+- [ ] On long Settings screens, scroll down, switch sections, navigate back, and check no controls are behind the system bar
+- [ ] Verify status consistency between list/detail/aggregate views and changes after user confirmation
 - [ ] Verify permission denied/unavailable states (biometrics/notifications)
 - [ ] Test data creation, editing, deletion, recovery from malformed local data
 - [ ] Capture device model, OS version, artifact SHA and date in PR

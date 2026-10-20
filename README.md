@@ -58,7 +58,23 @@ Before adding a shared feature, record its source, behavior contract, tests, Exp
 The starter includes an app-level error boundary, a reusable loading/error/empty UI, and an opt-in typed storage contract. See [resilience and storage](docs/resilience-and-storage.md) for limitations and platform adapters. Storage dependencies remain opt-in.
 
 See [AGENTS.md](AGENTS.md) and [Codex workflows](.codex/SKILLS.md) for reusable agent instructions and quality/emulator test skill templates. Adapt these per application.
-\n## Quick app identity setup\n\nOn a fresh checkout (before creating .env), run:\n\n\`\`\`sh\nnpm run init:app -- "My App" my-app com.example.myapp com.example.myapp\n\`\`\`\n\nThis validates identifiers, writes a local ignored .env from .env.example without modifying tracked files. It refuses to overwrite an existing .env. Review the generated values, icons, permissions and EAS settings before publishing. See [release checklist](docs/release-checklist.md).\n
+
+## Quick app identity setup
+
+On a fresh checkout, before creating `.env`, run:
+
+```sh
+npm run init:app -- "My App" my-app com.example.myapp com.example.myapp
+```
+
+This validates identifiers and writes a local ignored `.env` from `.env.example` without changing tracked files. It refuses to overwrite an existing `.env`. Review icons, permissions, app identity and EAS settings before publishing.
+
+## Lessons from real app POC testing
+
+- [Navigation and scroll behavior](docs/navigation-and-scroll.md): correct safe-area ownership for visible or hidden tabs and nested Settings sections.
+- [Local-state consistency](docs/local-state-consistency.md): derived statuses, future-effective changes, idempotent updates, and restart verification.
+- [Android release checklist](docs/release-checklist.md): debug APK versus Play AAB, Android system bars, and update-over-install.
+
 ## Agent-first development
 
 Start with [AGENTS.md](AGENTS.md). Agents can use the [architecture map](docs/architecture.md), [component catalog](docs/component-catalog.md), [implementation and PR playbook](docs/agent-workflow.md), and [context handoff template](docs/agent-handoff.template.md). These documents describe where to implement features, which primitives to reuse and how to verify work without adding unnecessary dependencies.
