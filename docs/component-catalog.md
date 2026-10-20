@@ -4,7 +4,7 @@ This is an index, not a substitute for TypeScript signatures. Inspect the linked
 
 | Component / helper | Location | Contract / when to reuse |
 |---|---|---|
-| `AppScreen` | `src/ui/primitives.tsx` | Safe-area-aware scrollable screen with shared spacing; tab bar owns bottom inset |
+| `AppScreen` | `src/ui/primitives.tsx` | Safe-area-aware scrollable screen with shared spacing; `bottomNavigation` defaults to visible tabs, or set `hidden-tabs` when this screen owns bottom inset |
 | `AppCard` | `src/ui/primitives.tsx` | Bordered surface for grouped content |
 | `AppText` | `src/ui/primitives.tsx` | Theme-aware body/title text |
 | `AppButton` | `src/ui/primitives.tsx` | Primary/secondary action, disabled and busy states |
@@ -20,7 +20,7 @@ This is an index, not a substitute for TypeScript signatures. Inspect the linked
 | `nativeStorageBackend`, `webStorageBackend` | `src/services/storageBackends.ts` | Platform persistence adapters; native accepts AsyncStorage contract |
 | `parseItems`, `saveItem`, `deleteItem` | `src/services/exampleItems.ts` | Pure example CRUD model; not a database |
 | `AppErrorBoundary` | `src/components/AppErrorBoundary.tsx` | Render-crash fallback, not async error handling |
-| Safe-area helpers | `src/platform/safeArea.ts` | Single-inset ownership for shell/tab/modals |
+| Safe-area helpers | `src/platform/safeArea.ts` | Single-inset ownership for visible/hidden tabs and modals |
 | Biometrics | `src/ui/biometrics.ts` | Optional identity prompt, **not** authorization or credential storage |
 | Notifications | `src/ui/notifications.ts` | Optional contract; no automatic push permission or delivery |
 
