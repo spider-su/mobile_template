@@ -1,12 +1,12 @@
 import type { ReactNode } from 'react';
 import { ActivityIndicator, Modal, Pressable, ScrollView, StyleSheet, Switch, Text, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { appSafeAreaEdges } from '../platform/safeArea';
+import { appEdgesForNavigation, type BottomNavigationMode } from '../platform/safeArea';
 import { spacing, usePalette } from './theme';
 
-export function AppScreen({ children }: { children: ReactNode }) {
+export function AppScreen({ children, bottomNavigation = 'visible-tabs' }: { children: ReactNode; bottomNavigation?: BottomNavigationMode }) {
   const p = usePalette();
-  return <SafeAreaView edges={appSafeAreaEdges} style={{ flex: 1, backgroundColor: p.background }}><ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={{ padding: spacing.lg, gap: spacing.md, paddingBottom: spacing.xl }}>{children}</ScrollView></SafeAreaView>;
+  return <SafeAreaView edges={appEdgesForNavigation(bottomNavigation)} style={{ flex: 1, backgroundColor: p.background }}><ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={{ padding: spacing.lg, gap: spacing.md, paddingBottom: spacing.xl }}>{children}</ScrollView></SafeAreaView>;
 }
 export function AppCard({ children }: { children: ReactNode }) {
   const p = usePalette();
