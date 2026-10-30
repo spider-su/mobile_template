@@ -30,5 +30,8 @@ func load_best(path: String) -> void:
 	if not FileAccess.file_exists(path):
 		return
 	var data: Variant = JSON.parse_string(FileAccess.get_file_as_string(path))
-	if data is Dictionary and data.get("best") is int:
-		best = maxi(0, data["best"])
+	if data is Dictionary:
+		var value: Variant = data.get("best")
+		# Godot JSON parsing can represent integral numbers as floats.
+		if (value is int or value is float) and value >= 0 and value == floor(value):
+			best = int(value)
