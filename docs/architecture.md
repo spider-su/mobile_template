@@ -1,33 +1,22 @@
-# Architecture and ownership map
+# Architecture
 
-Read this before adding a feature. The repository is an Expo SDK 57 / React Native 0.86 hobby-app starter, not a production domain application.
+## Runtime
 
-## Startup and runtime
+- **Godot 4.7.2 standard/GDScript**, using the GL Compatibility renderer and a portrait 720×1280 design viewport.
+- `project.godot`: application entry, display settings, renderer.
+- `scenes/main.tscn`: replaceable game screen.
+- `scripts/demo_game.gd`: disposable UI/input sample with pause, scoring and persistence.
+- `scripts/game_session.gd`: deterministic, testable pure domain state without dependency on the scene tree.
+- `tests/test_game_session.gd`: zero-dependency headless regression tests.
+- `export_presets.cfg`: **debug APK** Android export preset. Project-specific application ID must replace placeholder.
+- `ci/configure_android.gd`: CI-only editor configuration for Android SDK/JDK paths.
 
-`App.tsx` is the root composition entry. `src/navigation.tsx` owns the NavigationContainer and bottom tabs. `src/screens/` contains route-level UI and local orchestration. `src/ui/` contains reusable, product-agnostic components, palette, localization, validation and optional feature adapters. `src/services/` contains pure data operations and storage abstractions. `src/platform/` contains platform-specific behavior and safe-area contracts. `app.config.ts` reads non-secret app identity and native plugin configuration from environment variables.
+## Principles
 
-## Ownership rules
+Game-specific input/graphics/physics belong in product scenes or scripts; keep score, rule validation, and deterministic simulations separately testable when possible. For physics games use built-in Godot 2D nodes and fixed-step updates; do **not** build a custom physics abstraction before necessary.
 
-| Concern | Owner | Agent rule |
-|---|---|---|
-| App name, IDs, native plugins | `app.config.ts`, `.env.example` | Do not hardcode another app's identity or commit secrets |
-| Tabs, navigation and bottom inset | `src/navigation.tsx` | Register new tabs here; avoid second bottom inset in screens |
-| Screens and user flows | `src/screens/` | Compose existing primitives; keep storage/model rules outside JSX |
-| Generic design system | `src/ui/theme.ts`, `src/ui/primitives.tsx` | Reuse before adding components or dependencies |
-| Text and language | `src/ui/i18n.ts`, `LanguageContext.tsx` | Add both EN and PL keys; no hardcoded production copy |
-| Validation | `src/ui/validation.ts` or pure feature model | Keep rules independently testable |
-| Persistence | `src/services/storage.ts`, `storageBackends.ts` | Namespace keys, handle corrupt data, surface write errors |
-| Demo CRUD | `src/services/exampleItems.ts`, `src/screens/ExamplesScreen.tsx` | Reference example only; replace with product domain |
-| Native quality evidence | `.codex/skills/` | Tests/builds are not proof of real-device behavior |
+Do not add native plugins or a Gradle custom Android project by default. Turn on Gradle only when plugins or Play AAB exports require it. Keep analytics, ads, IAP, cloud saves, and authentication opt-in, with explicit device tests.
 
-## Dependency direction
+## Branch organization
 
-Screens may depend on UI, services and platform helpers. UI primitives must not depend on screens or app-domain models. Pure services should not import React components. Platform helpers must remain isolated and tested. Do not add a state-management library, router, database, analytics or auth SDK merely because it is common elsewhere.
-
-## Safe areas and errors
-
-With visible tabs the app screen owns the top inset and the tab navigator owns the bottom. With hidden tabs, the screen or frame must own the bottom explicitly, exactly once; see [navigation and scroll recipe](navigation-and-scroll.md). Modal content owns its own edges. Avoid double padding. Local-first apps should follow [state consistency guidance](local-state-consistency.md). Error boundaries catch render errors, not rejected promises; async storage/network failures require explicit UI states. Do not claim biometric verification is an app lock.
-
-## How to navigate unfamiliar code
-
-Start with `AGENTS.md` -> this map -> `docs/component-catalog.md` -> the relevant source file -> colocated tests -> `docs/agent-workflow.md`. Inspect current code before following documentation if they differ. Update documentation when contracts change.
+`main` is React Native/Expo app template; `game-template` is an independent Godot starter. **Neither branch should be merged into the other.** To start a new game use `git clone -b game-template --single-branch ...`, then change remote/identity for the new product. Shared fixes can be cherry-picked or manually ported when language/platform differences allow.

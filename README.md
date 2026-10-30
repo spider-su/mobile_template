@@ -1,80 +1,47 @@
-# Mobile App Template
+# Godot Game Template (Android-first)
 
-A small Expo + React Native starting point for focused mobile apps. It contains the platform setup and checks that are useful across our apps, without carrying product flows, customer data, API contracts, brand assets, app identifiers, or release credentials from either source app.
+This **game-template branch** of [mobile_template](https://github.com/spider-su/mobile_template) is a standalone **Godot 4.7.2 stable / GDScript** starter for small original 2D mobile games. The `main` branch remains the Expo / React Native **app** template. **Do not merge this branch into main**: select the correct starting branch when creating a product.
 
-## Start a new app
-
-Use the [project setup guide](docs/project-setup.md) to choose clone or fork, preserve an update path, and record external service configuration in the right project files. Set unique app identifiers and create a separate EAS project for each app that uses EAS. Do not reuse another app's signing credentials.
-
-Copy `.env.example` to `.env` for local values. Never commit secrets. Only configure external providers the app needs.
+It reuses the original template's local CI/APK artifact philosophy and engineering conventions, **not** its React Native runtime. Embedding Godot inside Expo would add a second UI/runtime and is intentionally out of scope.
 
 ## Included
 
-- Expo SDK 57 / React Native 0.86 starting versions, managed by `package-lock.json`.
-- React Navigation bottom tabs and safe-area context.
-- Safe-area ownership helpers for app shell, fallback screens, modals, and tab bar.
-- Unit tests for inset and tab-bar calculations.
-- TypeScript, ESLint, Vitest, and a CI workflow.
-- Generic, environment-configurable app name and native IDs.
+- Portrait, touch-first demo scene: tap to increase score, pause/resume, reset, persisted best score.
+- Pure, unit-testable game session logic; no external plugins or backend.
+- Compatibility renderer suitable for low-end Android devices.
+- Godot headless smoke/logic tests and GitHub Actions Android **debug APK** export and artifact upload, all run locally on GitHub-hosted runners, **without EAS or Expo**.
+- A portable, pinned Godot editor + matching export-template download.
+- Settings/identity, store release, testing and Codex conventions documented separately.
 
-The sample screens and colors are disposable. Add theme behavior, authentication, storage, notifications, API clients, analytics, or native plugins only when the product needs them.
+## Getting started
 
-## Checks
+1. Install **Godot 4.7.2 stable (standard, non-.NET)**.
+2. Open `project.godot` and run the scene (F6) or project (F5).
+3. Customize the game identity in `project.godot` and `export_presets.cfg` (especially `package/unique_name`).
+4. Replace `scenes/main.tscn` and the demo `scripts/demo_game.gd` with the real game.
+5. Keep reusable pure logic in `scripts/game_session.gd` or replace it with your product's pure state model.
 
-```sh
-npm ci
-npm run ci
-npx expo-doctor
+Run the offline logic test with `godot --headless --path . --script res://tests/test_game_session.gd`.
+Run the editor import check with `godot --headless --path . --editor --import --quit`.
+
+## Build Android debug APK
+
+Push to **game-template**, or start the `Godot Game CI` workflow manually. It installs matching Godot 4.7.2 templates and Android SDK, runs tests, exports a signed **debug APK**, and uploads `godot-game-debug-apk` as an Actions artifact. The debug key is generated afresh on each CI run: **don't use these artifacts for update-over-install or Play releases**.
+
+Locally, follow [Android setup](docs/android-release.md). In an Android-configured Godot editor, select Project > Export > Android, or run:
+
+```bash
+mkdir -p build
+godot --headless --path . --export-debug "Android" build/game-debug.apk
 ```
 
-CI checks type safety, lint, and unit tests. Expo Doctor checks the installed Expo dependency/configuration set. These checks do not establish behavior on a physical device or simulator.
+A Play Store **AAB** is not produced by this starter. Publishing requires a project-specific application ID, stable release signing, Gradle Android export, appropriate target SDK, and Play testing. See [docs/android-release.md](docs/android-release.md).
 
-## Propagate template fixes
+## Important boundaries
 
-New apps should keep this repository as the `template` remote. Pull an update branch and inspect the diff before merging:
+- The demo is a technical smoke sample, **not** a physics engine or finished game.
+- No ads, in-app purchase SDK, analytics, accounts, leaderboards or online services are installed.
+- CI export success is not a substitute for an emulator or real-device test.
+- The `main` Expo app template's screens and UI components are not compatible with Godot scenes. Engineering and release practices are deliberately mirrored instead.
 
-```sh
-# When you first clone this repository for an app:
-git remote rename origin template
-git remote add origin git@github.com:YOUR_ORG/YOUR_APP.git
-git push -u origin main
-
-# To pull a template update later:
-git fetch template
-git switch main
-git switch -c template/update-YYYY-MM
-git diff main...template/main
-git merge --no-ff template/main
-```
-
-Use the same review process for each app. Keep product-owned files and configuration out of bulk updates; resolve conflicts deliberately and rerun the app's CI. Apps with separate Git history can use targeted cherry-picks or small PRs for individual fixes instead of merging the starter history. A template update is a proposed source change; each app still owns its adoption and platform validation.
-
-## Shared-code decision rule
-
-Before adding a shared feature, record its source, behavior contract, tests, Expo/RN version compatibility, and device evidence in [the component ledger](docs/component-ledger.md). Port/adapt/skip per app. Move a module into a versioned package only after multiple apps need the same stable API and its release/update path is clear.
-
-## Reusable resilience and Codex workflows
-
-The starter includes an app-level error boundary, a reusable loading/error/empty UI, and an opt-in typed storage contract. See [resilience and storage](docs/resilience-and-storage.md) for limitations and platform adapters. Storage dependencies remain opt-in.
-
-See [AGENTS.md](AGENTS.md) and [Codex workflows](.codex/SKILLS.md) for reusable agent instructions and quality/emulator test skill templates. Adapt these per application.
-
-## Quick app identity setup
-
-On a fresh checkout, before creating `.env`, run:
-
-```sh
-npm run init:app -- "My App" my-app com.example.myapp com.example.myapp
-```
-
-This validates identifiers and writes a local ignored `.env` from `.env.example` without changing tracked files. It refuses to overwrite an existing `.env`. Review icons, permissions, app identity and EAS settings before publishing.
-
-## Lessons from real app POC testing
-
-- [Navigation and scroll behavior](docs/navigation-and-scroll.md): correct safe-area ownership for visible or hidden tabs and nested Settings sections.
-- [Local-state consistency](docs/local-state-consistency.md): derived statuses, future-effective changes, idempotent updates, and restart verification.
-- [Android release checklist](docs/release-checklist.md): debug APK versus Play AAB, Android system bars, and update-over-install.
-
-## Agent-first development
-
-Start with [AGENTS.md](AGENTS.md). Agents can use the [architecture map](docs/architecture.md), [component catalog](docs/component-catalog.md), [implementation and PR playbook](docs/agent-workflow.md), and [context handoff template](docs/agent-handoff.template.md). These documents describe where to implement features, which primitives to reuse and how to verify work without adding unnecessary dependencies.
+See [architecture](docs/architecture.md), [game release checklist](docs/android-release.md) and [AGENTS.md](AGENTS.md).
