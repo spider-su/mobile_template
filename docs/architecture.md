@@ -9,7 +9,7 @@
 - `scripts/game_session.gd`: deterministic, testable pure domain state without dependency on the scene tree.
 - `tests/test_game_session.gd`: zero-dependency headless regression tests.
 - `export_presets.cfg`: **debug APK** Android export preset. Project-specific application ID must replace placeholder.
-- `ci/configure_android.gd`: CI-only editor configuration for Android SDK/JDK paths.
+- `.github/workflows/godot-ci.yml`: CI writes temporary editor configuration for Android SDK/JDK paths.
 
 ## Principles
 
